@@ -1,0 +1,295 @@
+--s18846
+
+insert into ceremonia
+values (91,'2018/01/01');
+
+--nadrody 2018
+insert into nagroda (idnagroda,kategoria,ceremonia_numer,ceremonia_rok)
+values (1,'ACTOR IN A LEADING ROLE',91,'2018/01/01');
+
+insert into nagroda (idnagroda,kategoria,ceremonia_numer,ceremonia_rok)
+values (2,'ACTRESS IN A LEADING ROLE',91,'2018/01/01');
+
+insert into nagroda (idnagroda,kategoria,ceremonia_numer,ceremonia_rok)
+values (3,'BEST PICTURE',91,'2018/01/01');
+
+--actor
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (1,'Rami','Malek','1981/06/12','USA','M');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values(2,'Christian','Bale','1974/01/30','UK','M');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values(3,'Bradley','Cooper','1975/01/05','USA','M');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (4,'Willem','Dafoe','1955/07/22','USA','M');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (5,'Viggo','Mortensen','1958/10/20','USA','M');
+
+--film
+insert into film (idfilm,nazwa,premiera)
+values (1,'Vice','2018/12/11');
+
+insert into film (idfilm,nazwa,premiera)
+values (2,'A Star Is Born','2018/10/03');
+
+insert into film (idfilm,nazwa,premiera)
+values (3,'At Eternitys Gate','2018/11/16');
+
+insert into film (idfilm,nazwa,premiera)
+values (4,'Bohemian Rhapsody','2018/11/02');
+
+insert into film (idfilm,nazwa,premiera)
+values (5,'Green Book','2019/02/08');
+
+insert into film (idfilm,nazwa,premiera)
+values (6,'Roma','2018/10/27');
+
+insert into film (idfilm,nazwa,premiera)
+values (7,'The Wife','2018/01/15');
+
+insert into film (idfilm,nazwa,premiera)
+values (8,'The Favourite','2019/03/08');
+
+insert into film (idfilm,nazwa,premiera)
+values (9,'Can You Even Forgive Me?','2018/10/19');
+
+insert into film
+values (10,'Black Panther','2018/01/29');
+
+insert into film
+values (11,'BlacKkKlansman','2018/08/09');
+
+--man role
+insert into role(idroli,rola)
+values (1,'Tony Lip');
+
+insert into role(idroli,rola)
+values (2,'Freddie Mercury');
+
+insert into role(idroli,rola)
+values (3,'Vincent Van Gogh');
+
+insert into role(idroli,rola)
+values (4,'Jack');
+
+insert into role(idroli,rola)
+values (5,'Dick Cheney');
+
+
+--actress
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (6,'Yalitza','Aparicio','1993/12/11','Mexico','W');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (7,'Glenn','Close','1947/03/19','USA','W');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (8,'Olivia','Colman','1974/01/30','UK','W');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (9,'Lady','Gaga','1986/03/28','USA','W');
+
+insert into czlowiek(idczlowiek,imie,nazwisko,datanarodzenia,kraj,plec) 
+values (10,'Melissa','McCarthy','1970/08/26','USA','W');
+
+
+--woman role
+insert into role(idroli,rola)
+values (6,'Lee Israel');
+
+insert into role(idroli,rola)
+values (7,'Ally');
+
+insert into role(idroli,rola)
+values (8,'Queen Anne');
+
+insert into role(idroli,rola)
+values (9,'Joan Castleman');
+
+insert into role(idroli,rola)
+values (10,'Cleo');
+
+
+--Actor in leading role 2018
+insert into zwyciezcaczlowiek 
+values (1,1);
+--Actress in leading role 2018
+insert into zwyciezcaczlowiek 
+values (2,8);
+--Best Picture 2018
+insert into zwyciezcafilm
+values (3,5);
+----------------------------------------------------------------------not done
+
+
+--man film works 2018
+insert into nadjakimfilmempracolaw 
+values (1,1,5,2);
+
+insert into nadjakimfilmempracolaw 
+values (2,2,4,3);
+
+insert into nadjakimfilmempracolaw 
+values (3,3,3,4);
+
+insert into nadjakimfilmempracolaw 
+values (4,4,2,1);
+
+insert into nadjakimfilmempracolaw 
+values (5,5,1,5);
+
+--woman film works 2018
+insert into nadjakimfilmempracolaw 
+values (6,6,10,6);
+
+insert into nadjakimfilmempracolaw 
+values (7,7,9,7);
+
+insert into nadjakimfilmempracolaw 
+values (8,8,8,8);
+
+insert into nadjakimfilmempracolaw 
+values (9,2,7,9);
+
+insert into nadjakimfilmempracolaw 
+values (10,9,6,10);
+------------------------------------------------------------------- not done
+
+-----------2017---------
+--acrot in leading role 
+insert into czlowiek
+values (11,'Timothée','Chalamet','1995/12/27','USA','M');
+
+insert into czlowiek
+values (12,'Daniel Day','-Lewis','1957/04/29','UK','M');
+
+insert into czlowiek
+values (13,'Daniel','Kaluuya','1989/02/24','UK','M');
+
+insert into czlowiek
+values (14,'Gary','Oldman','1958/03/21','UK','M');
+
+insert into czlowiek
+values (15,'Denzel','Washington','1954/12/28','USA','M');
+
+---man role 2017
+insert into role 
+values (11,'Roman J. Israel');
+
+insert into role 
+values (12,'Winston Churchill');
+
+insert into role 
+values (13,'Chris Washington');
+
+insert into role 
+values (14,'Reynolds Woodcock');
+
+insert into role 
+values (15,'Elio');
+
+---film where man played
+insert into film
+values (12,'Call Me by Your Name','2017/10/20');
+
+insert into film
+values (13,'Phantom Thread','2017/12/25');
+
+insert into film
+values (14,'Get Out','2017/02/24');
+
+insert into film
+values (15,'Darkest Hour','2018/01/11');
+
+insert into film
+values (16,'Roman J. Israel, Esq.','2017/11/17');
+
+----------------------------------------------------------------- done
+----dodalew reryserow 2018 roku
+
+--nadrody 2018
+insert into nagroda 
+values (4,'DIRECTING',91,'2018/01/01');
+
+--directors
+insert into czlowiek 
+values (16,'Spike','Lee','1957/03/20','USA','M');
+
+insert into czlowiek 
+values (17,'Pawel','Pawlikowski','1957/09/10','Poland','M');
+
+insert into czlowiek 
+values (18,'Yorgos','Lanthimos','1973/09/23','Greece','M');
+
+insert into czlowiek 
+values (19,'Alfonso','Cuarón','1961/11/28','Mexico','M');
+
+insert into czlowiek 
+values (20,' Adam','McKay','1968/04/17','USA','M');
+--role director
+insert into role
+values (16,'Director');
+
+insert into film
+values (17,'Cold War','2018/06/08');
+--directors works
+insert into nadjakimfilmempracolaw
+values (11,11,16,16);
+
+insert into nadjakimfilmempracolaw
+values (12,17,16,17);
+
+insert into nadjakimfilmempracolaw
+values (13,8,16,18);
+
+insert into nadjakimfilmempracolaw
+values (14,6,16,19);
+
+insert into nadjakimfilmempracolaw
+values (15,1,16,20);
+--directing winer 2018
+insert into zwyciezcaczlowiek
+values (4,19);
+-------------------------------------------------------done
+----2017
+
+--ceremonia 2017
+insert into ceremonia
+values (90,'2017/01/01');
+--nagrody 2017
+insert into nagroda 
+values (5,'ACTOR IN A LEADING ROLE',90,'2017/01/01');
+
+insert into nagroda 
+values (6,'ACTRESS IN A LEADING ROLE',90,'2017/01/01');
+
+insert into nagroda 
+values (7,'BEST PICTURE',90,'2017/01/01');
+
+insert into nagroda 
+values (8,'DIRECTING',90,'2017/01/01');
+
+--man nadjakimfilmempracolaw 2017
+insert into nadjakimfilmempracolaw
+values (16,12,15,11);
+
+insert into nadjakimfilmempracolaw
+values (17,13,14,12);
+
+insert into nadjakimfilmempracolaw
+values (18,14,13,13);
+
+insert into nadjakimfilmempracolaw
+values (19,15,12,14);
+
+insert into nadjakimfilmempracolaw
+values (20,16,11,15);
+
+--ACTOR IN A LEADING ROLE
+insert into zwyciezcaczlowiek
+values (5,14);
+
