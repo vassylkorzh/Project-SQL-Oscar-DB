@@ -1,0 +1,94 @@
+--procedurę służe do wstawiania filmow do tabeli Film.
+--Procedura będzie pobierać jako parametry:Nawe i date premiery 
+--i bede sprawdzala czy film o takiej nazwe lub date premiery juz isnieje. 
+
+create  procedure nowy_film 
+@f_nazwa varchar(60),
+@data_prem date
+as
+Declare @n_id int
+begin 
+        if exists (select * from film where nazwa = @f_nazwa and premiera=@data_prem)
+		begin
+		print 'Taki film juz isnieje w baze'
+		end
+        else
+		select @n_id= (max(idfilm)+1)  from Film
+            insert into Film values (@n_id,@f_nazwa,@data_prem)
+            Print cast(@f_nazwa as varchar)+' - '+cast(@data_prem as varchar)+' byl wstawiony '
+        
+end
+drop procedure nowy_film
+exec nowy_film 'Joker','2019/10/04'
+select * from film 
+
+go
+--Procedura sluze do wstawania czlowieka(aktora,rezysera,) do tabeli czlowiek.
+--Procedura będzie pobierać jako parametry: Imie,Nazwisko,Date urodzenia,kraj pohodzenia i plec ('W' albo 'M')
+--i bede sprawdzala czy czlowiek o takim imie i nazwisko juz istneje
+--W przeciwnym przypadku wypisuje komunikat informujący o tym ze taki czlowiek juz isneje i wypisyje jego index
+
+create  procedure nowy_actor 
+@imie_act varchar(30),
+@nazwisko_act varchar(30),
+@data_narod date,
+@kraj_poch varchar(30),
+@plec_act varchar(1) 
+as
+declare @counter_people int,
+@new_idpeople int
+begin 
+    if exists (select * from czlowiek where imie = @imie_act and nazwisko = @nazwisko_act)
+	begin
+        select @new_idpeople =  idczlowiek  from czlowiek where imie = @imie_act and nazwisko = @nazwisko_act
+		print 'Taki czlowiek juz isnieje w baze o indeksze - '+cast(@new_idpeople as varchar)
+	end
+    else 
+	begin
+        select @new_idpeople = (max(idczlowiek)+1)  from  czlowiek
+        insert into czlowiek values(@new_idpeople,@imie_act,@nazwisko_act,@data_narod,@kraj_poch,@plec_act)
+        print cast(@imie_act as varchar)+' '+cast(@nazwisko_act as varchar)+' byl wstawiony o indeksze -'+cast(@new_idpeople as varchar)  
+	end
+end
+
+drop procedure nowy_actor 
+exec nowy_actor 'John','Depp','1963/06/09','USA','M'
+select * from czlowiek
+
+select * from czlowiek        
+ go       
+--------Trigery        
+--Te wyzwaliacz nie pozwala wykonacz update albo delete na tabele nadjakimfilmempracolaw
+
+create trigger nz_njfp
+on nadjakimfilmempracolaw
+for update,delete 
+as
+begin 
+	rollback 
+ 	raiserror ('Nie wolno nic usuwac i zmieniac w tabele nadjakimfilmempracolaw ',1,2)
+   
+end
+
+
+delete from nadjakimfilmempracolaw
+
+--wyzwalacz ktory nie pozwala wstawic film premiera ktorego jest poznej daty wstawania 
+create  trigger nd_zFilm
+on film 
+for insert
+as
+declare @date date,@info varchar(100)
+begin 
+select @date = convert(date,Sysdatetime());
+        if exists(select * from inserted where premiera>@date)
+	begin
+	rollback 
+	set @info = 'Nie wolno wstawiacz film  z premiera poznej '+ cast(convert(date,Sysdatetime()) as varchar)
+ 	raiserror (@info,1,2)
+	end
+end
+
+insert into film values(18,'The irishman','2020/06/11');        
+    
+        
