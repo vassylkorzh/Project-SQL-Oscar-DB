@@ -1,0 +1,103 @@
+--s18846
+--select where 
+--wypisz imiona wszystkich actorek.
+select imie||' '||nazwisko ACTRESS from czlowiek 
+where plec='W';
+
+--wypisz wszystkie imiona ludzie który mają 4 literowe imie
+select imie||' '||nazwisko CZLOWIEK from czlowiek 
+where imie like '____';
+
+--wypisz nazwy filmów które zaczynają sie  na literę B
+select nazwa from film 
+where nazwa like 'B%';
+
+--wypisz nazwy filmów który miały premiere w 2019 roku.
+select nazwa from film 
+where extract(year from premiera) = 2019;
+
+--wypisz nazwy ról o ID większym niz 5, oprócz reżyserów.
+select rola from role 
+where idroli >5 and rola != 'Director';
+
+--select join 
+--wypisz nazwy filmów nad ktorymi pracowali ludzie z UK
+select nazwa from film 
+join nadjakimfilmempracolaw on film.idfilm=nadjakimfilmempracolaw.film_idfilm
+join czlowiek on nadjakimfilmempracolaw.czlowiek_idczlowiek=czlowiek.idczlowiek
+where czlowiek.kraj='UK';
+
+--wypisz imioana aktorów ktory otrzymały nagrode OSCAR w kategorii ACTOR IN A LEADING ROLE.
+select imie||' '||nazwisko ACTOR,kategoria from czlowiek 
+join zwyciezcaczlowiek on zwyciezcaczlowiek.czlowiek_idczlowiek=czlowiek.idczlowiek
+join nagroda on nagroda.idnagroda=zwyciezcaczlowiek.nagroda_idnagroda
+where nagroda.kategoria='ACTOR IN A LEADING ROLE';
+
+--wypisz imiona ludzi i nazwy filmow ktory otrzymały nagrodę OSCAR
+select imie||' '||nazwisko CZLOWIEK,nazwa from czlowiek 
+join nadjakimfilmempracolaw on nadjakimfilmempracolaw.czlowiek_idczlowiek=czlowiek.idczlowiek
+join film on film.idfilm=nadjakimfilmempracolaw.film_idfilm
+join zwyciezcafilm on film.idfilm=zwyciezcafilm.film_idfilm
+where zwyciezcafilm.nagroda_idnagroda is not null;
+
+--wypisz imiona i nazwiska zwycięzców,nazwy filmóm nad którymi pracowali
+--,rol w tym filmie,kategorie nagrody i rok ceremonii OSCAR oprócz rezyserow
+select imie||' '||nazwisko ACTOR,nazwa,rola,kategoria,EXTRACT(year from ceremonia_rok) ROK from czlowiek
+join nadjakimfilmempracolaw on nadjakimfilmempracolaw.czlowiek_idczlowiek=czlowiek.idczlowiek
+join film on film.idfilm=nadjakimfilmempracolaw.film_idfilm
+join role on nadjakimfilmempracolaw.role_idroli=role.idroli
+join zwyciezcaczlowiek on zwyciezcaczlowiek.czlowiek_idczlowiek=czlowiek.idczlowiek
+join nagroda on nagroda.idnagroda=zwyciezcaczlowiek.nagroda_idnagroda 
+where zwyciezcaczlowiek.nagroda_idnagroda is not null and rola!='Director';
+
+--wypisz imiona wszystkich reżyserow i nazwy filmóm nad którymi pracowali.A obok zwycięzców dodaj komentarz *.
+select imie||' '||nazwisko REZYSER,nazwa,'*' WINNER from czlowiek 
+join nadjakimfilmempracolaw on nadjakimfilmempracolaw.czlowiek_idczlowiek=czlowiek.idczlowiek
+join film on film.idfilm=nadjakimfilmempracolaw.film_idfilm
+join role on nadjakimfilmempracolaw.role_idroli=role.idroli
+join zwyciezcaczlowiek on zwyciezcaczlowiek.czlowiek_idczlowiek=czlowiek.idczlowiek
+where rola='Director'and zwyciezcaczlowiek.nagroda_idnagroda is not null 
+union
+select imie||' '||nazwisko REZYSER,nazwa,' ' from czlowiek 
+join nadjakimfilmempracolaw on nadjakimfilmempracolaw.czlowiek_idczlowiek=czlowiek.idczlowiek
+join film on film.idfilm=nadjakimfilmempracolaw.film_idfilm
+join role on nadjakimfilmempracolaw.role_idroli=role.idroli
+where rola='Director' and 
+idczlowiek not in (select idczlowiek from czlowiek 
+join zwyciezcaczlowiek on zwyciezcaczlowiek.czlowiek_idczlowiek=czlowiek.idczlowiek
+where zwyciezcaczlowiek.nagroda_idnagroda is not null) ;
+
+--select group by
+
+--wypisz kraj i ilosc zwiezcow z tego kraju podczas 91 ceremonii OSCAR
+select kraj,count(*)"ILOSC ZWYCIEZCOW" from czlowiek
+join zwyciezcaczlowiek on zwyciezcaczlowiek.czlowiek_idczlowiek=czlowiek.idczlowiek
+join nagroda on nagroda.idnagroda=zwyciezcaczlowiek.nagroda_idnagroda 
+where ceremonia_numer=91
+group by kraj;
+
+--wypisz plec i ilosc niminantow ktory pracowały 
+--nad filmami ktory miały premiere w 2018 i 2019 rokach
+select plec,count(*)"ILOSC NOMINANTOW" from czlowiek
+join nadjakimfilmempracolaw on nadjakimfilmempracolaw.czlowiek_idczlowiek=czlowiek.idczlowiek
+join film on film.idfilm=nadjakimfilmempracolaw.film_idfilm
+where extract(year from premiera) BETWEEN 2018 and 2019
+group by plec;
+
+--wypisz rok i ilosc filmow ktory miały premiere w  tym roku.Posortuj według roku.
+select extract(year from premiera),count(*) "ILOSC FILMOW"from film 
+group by extract(year from premiera)
+order by extract(year from premiera);
+
+--wypisz kraj pochozenia  w ktorym ilosc nominantow przekracza 4.
+select kraj,count(*)"ILOSC NOMINANTOW" from czlowiek
+group by kraj
+having COUNT(1)>4;
+
+--Wypisz pierwsze litery imion nominantów ktorych ilosc przekracza 1. 
+select substr(ltrim(imie),1,1)LITERA,count(*)"ILOSC NOMINANTOW" from czlowiek
+group by substr(ltrim(imie),1,1)
+HAVING count(*)>1
+order by substr(ltrim(imie),1,1);
+
+
